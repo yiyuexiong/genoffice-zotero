@@ -1,253 +1,209 @@
-# GenOffice
+# GenOffice Zotero Integration
 
-**The world's first full-featured open-source AI Office suite.**
+[中文](#中文) | [English](#english)
 
-[![License: Apache-2.0](https://img.shields.io/github/license/genspark-ai/genoffice)](LICENSE)
-[![Latest release](https://img.shields.io/github/v/release/genspark-ai/genoffice)](https://github.com/genspark-ai/genoffice/releases/latest)
-[![Downloads](https://img.shields.io/github/downloads/genspark-ai/genoffice/total)](https://github.com/genspark-ai/genoffice/releases)
+> [!IMPORTANT]
+> This is an unofficial derivative project based on GenOffice. It is not affiliated with or
+> endorsed by GenOffice, Genspark, or Zotero. The current build is an alpha preview for private
+> review.
 
-[Website](https://genoffice.ai/) · [Download](https://github.com/genspark-ai/genoffice/releases/latest) · [Privacy](PRIVACY.md) · [Demo](https://www.youtube.com/watch?v=B2pLdMX95v4)
+## 中文
 
-GenOffice is a free, open-source alternative to Microsoft Office for macOS,
-Windows, and Linux, built around AI editing as a first-class workflow rather
-than a bolted-on chat box. It opens and saves the real Microsoft Office
-formats — Word (`.docx`), Excel (`.xlsx`), PowerPoint (`.pptx`) — and edits
-PDF and Markdown too: a word processor, spreadsheet, presentation editor,
-PDF editor, and Markdown editor as six Electron apps sharing one engine
-layer.
+### 项目简介
 
-[![Meet GenOffice — the world's first full-featured open-source AI Office (video)](https://img.youtube.com/vi/B2pLdMX95v4/maxresdefault.jpg)](https://www.youtube.com/watch?v=B2pLdMX95v4)
+GenOffice Zotero Integration 是基于
+[GenOffice v0.9.10](https://github.com/genspark-ai/genoffice/tree/v0.9.10) 的非官方定制版，
+目标是让用户在 GenOffice Docs 中像使用 Word 或 WPS 一样使用 Zotero。
 
-[Watch the demo video on YouTube](https://www.youtube.com/watch?v=B2pLdMX95v4)
+本分支保留完整 GenOffice 应用壳，业务修改集中在 `apps/docs` 和
+`packages/docx-engine` 的 Zotero 接入与 DOCX 往返兼容。
 
-## Features
+![GenOffice Docs 中的 Zotero 工具组](docs/assets/current-reference-tab.png)
 
-- **Real PDF editing** — retype text and edit images in the page itself, original fonts preserved.
-- **Local PDF → Word / PowerPoint / Excel conversion** — turn a PDF into an editable `.docx`, `.pptx`, or `.xlsx` entirely on your machine: no cloud, no upload.
-- **Scanned PDFs too** — on macOS and Windows scanned pages are read with the system OCR, so they convert to editable text.
-- **Microsoft Word–compatible, byte-preserving `.docx` editing** — only what you touched changes; Word never notices.
-- **Word-faithful pagination** — page breaks land where Word puts them.
-- **Excel-compatible spreadsheets** — in-house engine with a Rust `.xlsx` sidecar, own charts, pivot tables, slicers.
-- **PowerPoint-compatible presentations** — in-house `.pptx` engine with masters, layouts, smart guides, non-destructive crop.
-- **Markdown to Word, fully local** — the same OOXML engine, no Pandoc, no cloud.
-- **AI that edits documents** — block-level edits with snapshots and diffs, document-aware agents.
-- **Bring your own key (BYOK)** — run the AI on your own API key: Claude, OpenAI, Gemini, DeepSeek, Kimi, GLM, Qwen, Doubao, MiniMax, Grok, Mistral, OpenRouter, or any OpenAI-compatible endpoint — or sign in with Genspark and skip keys entirely.
-- **Agent tools built in** — web/image search, image generation, media analysis.
-- **Light / dark / system themes.**
-- **macOS, Windows, Linux.**
-- **Free & open-source (Apache-2.0).**
+### 已实现功能
 
-## Download
+- 使用 Zotero LibreOffice Integration API v3 与 Zotero 桌面端通信。
+- 添加或编辑正文引文、参考文献表，并刷新它们。
+- 设置 Zotero 文档首选项，或移除域代码并保留可见文本。
+- 保留 Word `ADDIN ZOTERO_*` 字段和 `ZOTERO_PREF_1..n` 自定义属性。
+- 支持跨段落参考文献表，每个条目独立成段。
+- 支持 Zotero RTF 中常用的粗体、斜体、下划线、删除线、上下标、字号和大小写样式。
+- 支持文献表的悬挂缩进、段落间距和对齐。
+- 保留 GenOffice 浅色、深色和跟随系统主题。
 
-| Platform                             | Requirements                                          | Download                                                                            |
-| ------------------------------------ | ----------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| **macOS** — Apple Silicon (arm64)    | macOS 11+                                             | [Latest `.dmg` (arm64)](https://github.com/genspark-ai/genoffice/releases/latest)   |
-| **macOS** — Intel (x64)              | macOS 11+                                             | [Latest `.dmg` (x64)](https://github.com/genspark-ai/genoffice/releases/latest)     |
-| **Windows** (x64)                    | Windows 10+                                           | [Latest `.exe` installer](https://github.com/genspark-ai/genoffice/releases/latest) |
-| **Linux** — Debian / Ubuntu          | x86_64, glibc 2.34+ (Ubuntu 22.04 or newer)           | [Latest `.deb`](https://github.com/genspark-ai/genoffice/releases/latest)           |
-| **Linux** — Fedora / RHEL / openSUSE | x86_64, glibc 2.34+ (Fedora 35+, RHEL 9+, Leap 15.6+) | [Latest `.rpm`](https://github.com/genspark-ai/genoffice/releases/latest)           |
-| **Linux** — other distributions      | x86_64, glibc 2.34+, FUSE 2                           | [Latest `.AppImage`](https://github.com/genspark-ai/genoffice/releases/latest)      |
+### 下载与安装
 
-All builds come from `main`; the macOS and Windows installers are signed.
-Older versions are on the [Releases](https://github.com/genspark-ai/genoffice/releases) page.
+当前只提供在 Intel Mac 上构建的未签名测试包：
 
-### Installing on Linux
+1. 从 [Releases](https://github.com/yiyuexiong/genoffice-zotero/releases) 下载
+   `GenOffice-Zotero-Intel-macOS.zip`。
+2. 解压后将 `GenOffice.app` 移到“应用程序”。
+3. 启动 Zotero 桌面端，再启动 GenOffice。
+4. macOS 如果拦截未签名应用，请在“系统设置 → 隐私与安全性”中确认打开。
 
-The deb installs with apt — it pulls in the dependencies and adds GenOffice
-to the applications menu:
+已验证环境：Zotero 9.0.6、macOS Intel x86_64、GenOffice v0.9.10。
+Apple Silicon、Windows 和 Linux 用户目前需要从源码构建。
 
-```bash
-sudo apt install ./genoffice_<version>_amd64.deb
-```
+### 使用方法
 
-On Fedora / RHEL-family / openSUSE, install the rpm instead:
+1. 先启动 Zotero。
+2. 在 GenOffice 中打开或新建 `.docx` 文档。
+3. 打开“引用”选项卡。
+4. 使用“Zotero 引文”、“Zotero 文献表”、“刷新”或“文档首选项”。
+5. 保存为 DOCX，Zotero 域代码会与可见内容一起保存。
 
-```bash
-sudo dnf install ./genoffice-<version>.x86_64.rpm     # Fedora / RHEL family
-sudo zypper install ./genoffice-<version>.x86_64.rpm  # openSUSE
-```
+GenOffice 通过 `127.0.0.1:23116` 与本机 Zotero 通信，不直接读取或修改
+Zotero 数据库。
 
-The AppImage instead runs in place: install the FUSE 2 runtime
-(`sudo apt install libfuse2`; on Ubuntu 24.04 the package is `libfuse2t64`),
-make the file executable, then run it:
+### 从源码构建
 
-```bash
-chmod +x GenOffice-<version>.AppImage
-./GenOffice-<version>.AppImage
-```
-
-## Apps
-
-| App             | Product                | What it is                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| --------------- | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `apps/docs`     | **GenOffice Docs**     | `.docx` word processor. Byte-preserving round trip: only dirty paragraphs are regenerated (paragraph patch), everything else in the original file is kept byte-for-byte, so opening and saving never breaks layout in Word. Paginated view whose line metrics reproduce the original document's layout, tracked changes, comments, styles, equations, ink.                                                                                                                                                                                                                                                                                                                                                                               |
-| `apps/sheets`   | **GenOffice Sheets**   | `.xlsx` spreadsheet. UI built on the open-source [Univer](https://github.com/dream-num/univer) core (Apache-2.0) with a large layer of in-house extensions; `.xlsx` import/export runs through an in-house Rust sidecar (calamine + IronCalc), charts are rendered in-house (Konva), plus pivot tables, slicers, conditional formatting, and formula tracing.                                                                                                                                                                                                                                                                                                                                                                            |
-| `apps/slides`   | **GenOffice Slides**   | `.pptx` presentations. In-house `.pptx` parse/render/edit engine with masters, charts, cropping, ink, and text shaping (HarfBuzz metrics).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| `apps/pdf`      | **GenOffice PDF**      | `.pdf` viewer/editor on [pdf.js](https://github.com/mozilla/pdf.js) (Apache-2.0) + [pdf-lib](https://github.com/Hopding/pdf-lib) (MIT): annotations, forms, outlines, stamps, signatures, page operations, and printing support. True text editing — paragraph selection with in-block reflow, alignment restoration, original-font preservation — and content-stream image insert/edit, all rewriting page content streams through [PDFium](https://pdfium.googlesource.com/pdfium/) wasm (BSD-3-Clause) with subset-embedded fonts — no cover-up annotations. Converts PDFs into editable Word, PowerPoint, and Excel files fully locally (`packages/pdf2docx`), with OCR support for scanned pages (system OCR on macOS and Windows). |
-| `apps/markdown` | **GenOffice Markdown** | `.md` / `.markdown` editor: Tiptap block editor over plain Markdown files — headings, lists, tables, images, code blocks — saved back as plain Markdown, hosted in shell tabs.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| `apps/shell`    | **GenOffice**          | The suite shell: home screen, tabbed hosting of the five editors, light/dark/system theme, auto-update.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-
-Every app embeds the same AI panel: block-granular AI editing with version
-snapshots and diffs in docs, a tool-calling agent over workbook/slide/PDF
-state in the others.
-
-The whole suite ships light / dark / system UI themes built on shared design
-tokens (`packages/ui`), with a CI guard that keeps chrome colors on the token
-system. Document surfaces stay light in dark mode — Word-style dark chrome
-around white paper — so files render and export identically in both themes.
-
-**AI backends — Genspark sign-in or bring your own key.** By default the
-apps sign in to a Genspark account through a device-code flow — no model API
-key to enter — and model calls route through the Genspark proxy (Claude,
-GPT, and Gemini families). Or bring your own key (BYOK) in the AI settings:
-Claude, OpenAI, Gemini, DeepSeek, Kimi, GLM, Qwen, Doubao, MiniMax, Grok,
-Mistral, and OpenRouter are built in, plus a custom provider slot for any
-OpenAI-compatible endpoint (base URL + key), local servers included. A
-Genspark account also unlocks the Genspark ("gsk") tool endpoints the agents
-build on — web and image search, image generation and editing,
-image/audio/video analysis, and audio transcription — all reachable through
-`packages/ai-search` for anyone extending the agent layer.
-
-## Engine packages
-
-All pure TypeScript, no Electron dependency, unit-tested (except the UI kit):
-
-- `packages/docx-engine` — docx parsing → block tree (with `docxIndex`
-  anchors and passthrough), OOXML fragment generation, byte-level paragraph
-  patching.
-- `packages/pptx-engine` / `packages/pptx-render` — pptx model and rendering.
-- `packages/pdf2docx` — local PDF → DOCX conversion: PDFium character-level
-  extraction, pure-geometry layout analysis, rebuild through `docx-engine`;
-  the same analysis drives the PDF app's PowerPoint and Excel exports.
-- `packages/file-parse` — text extraction for AI attachments (office formats,
-  text formats).
-- `packages/agent-core` — the AI agent loop and skill composition shared by
-  every app.
-- `packages/ai-provider` — provider abstraction and streaming for the model
-  backends.
-- `packages/ai-search` — Genspark auth + web/image search tools.
-- `packages/i18n`, `packages/ui`, `packages/project-store`,
-  `packages/electron-utils` — shared i18n core, React UI kit, recent-files
-  store, and Electron main-process helpers.
-
-## Development
+要求 Node.js 22.12 或更高版本、npm 10 或更高版本。
 
 ```bash
 npm install
-npm run fixtures     # generate test .docx fixtures
-npm test             # engine + app unit tests (docs/sheets/slides need no display)
-npm run typecheck    # tsc --noEmit across every workspace
-npm run dev          # all five editors + shell against Vite dev servers
-npm run dev:docs     # a single app (same pattern works per workspace)
-npm run dist:mac     # package macOS dmg (regenerates third-party notices)
-npm run dist:win     # package Windows nsis installer
-npm run dist:linux   # package Linux AppImage + deb + rpm
+npm run dev
 ```
 
-The sheets app additionally needs a Rust toolchain for its xlsx sidecar
-(`cargo` on PATH); `npm run build -w @genoffice/sheets` compiles it
-automatically.
+构建 Docs 和完整 GenOffice 壳：
 
-## Architecture notes (docx round trip)
-
-```
-open docx ─► archive original by hash (never touched)
-          ─► docx-engine parses word/document.xml top-level elements (w:p / w:tbl / …)
-          ─► Block tree, each block anchored by docxIndex + original XML slice
-          ─► Tiptap streaming editor (manual + AI editing, dirty tracking)
-save      ─► dirty blocks → OOXML fragments (referencing existing styles only)
-          ─► splice into original document.xml (untouched blocks keep original bytes)
-          ─► repack zip; all other entries copied byte-for-byte
+```bash
+npm run build -w @genoffice/docs
+npm run build -w @genoffice/shell
 ```
 
-The same philosophy holds in sheets and slides: the original file is the
-source of truth, edits are applied as narrow patches, and everything the
-editor didn't touch survives the round trip untouched.
+运行核心测试：
 
-## FAQ
+```bash
+npm run test -w @genoffice/docs
+npm run test -w @genoffice/docx-engine
+npm run typecheck -w @genoffice/docs
+npm run typecheck -w @genoffice/docx-engine
+```
 
-**Is GenOffice free?**
-Yes. GenOffice is free and open-source under the Apache-2.0 license — no
-trial, no paid tier for the apps themselves.
+当前验证基线：Docs 1525 项通过；DOCX 引擎 1001 项通过、1 项跳过。
 
-**Can GenOffice open Microsoft Word, Excel, and PowerPoint files?**
-Yes. GenOffice opens and saves native `.docx`, `.xlsx`, and `.pptx` files.
-Saving is byte-preserving: parts of the file you didn't touch are written
-back byte-for-byte, so documents keep working in Microsoft Office.
+### 已知限制
 
-**Does GenOffice work offline?**
-Document editing is fully local — files never leave your machine to be
-opened, edited, or saved. The AI features (agents, search, image tools) need
-a network connection, with either a Genspark sign-in or your own model API
-key (BYOK).
+- 脚注式和尾注式 Zotero 引文尚未实现。
+- `Document_setBibliographyStyle` 尚未完整映射；RTF 自带的段落样式已支持。
+- RTF 字体表、颜色和复杂嵌入对象尚未映射。
+- Zotero 文档迁移、placeholder 转换以及 export/import 尚未实现。
+- 尚未完成 Word、WPS 和 GenOffice 三方人工往返测试矩阵。
+- 当前 macOS 包仅为 Intel x86_64，且未签名、未公证。
 
-**Can GenOffice edit PDF files?**
-Yes — real PDF text and image editing that rewrites the page content stream
-with the original fonts preserved, not cover-up annotations.
+### 上游、许可证与商标
 
-**Can GenOffice convert PDF to Word, Excel, or PowerPoint?**
-Yes — GenOffice converts PDFs into editable `.docx`, `.xlsx`, and `.pptx`
-files entirely on-device: PDFium character-level extraction plus
-geometry-based layout analysis, no cloud service, no upload. Scanned pages are
-covered too — on macOS and Windows the system OCR reads them, so they convert
-to editable text rather than a page image.
+本项目基于 [genspark-ai/genoffice](https://github.com/genspark-ai/genoffice)，原版 README 保存在
+[README-GENOFFICE.md](README-GENOFFICE.md)。本仓库保留原项目的
+[Apache License 2.0](LICENSE)、[NOTICE](NOTICE) 和第三方声明；`ee/` 目录受其独立许可证约束。
 
-**Can I use my own AI model or API key?**
-Yes. Besides the keyless Genspark sign-in, GenOffice supports bring your own
-key (BYOK) for Claude, OpenAI, Gemini, DeepSeek, Kimi, GLM, Qwen, Doubao,
-MiniMax, Grok, Mistral, and OpenRouter, plus any OpenAI-compatible endpoint
-— including local model servers.
+GenOffice 和 Genspark 名称及标志是 Mainfunc, Inc. 的商标；Apache-2.0 不授予商标使用权。
+Zotero 是 Corporation for Digital Scholarship 的商标。本项目与上述任何组织均无隶属或背书关系。
+在公开发布派生应用前，应替换原 GenOffice 名称和图标，并完成独立的签名与公证。
 
-**Does GenOffice collect any data?**
-Official packaged builds send limited usage analytics by default, and you can
-disable reporting at any time under Settings → General. Analytics never sends
-document content, file names, file paths, account identity, or email addresses.
-See [GenOffice Privacy](PRIVACY.md) for the complete event and data disclosures.
+---
 
-## Security
+## English
 
-See [SECURITY.md](SECURITY.md) for the process security posture (renderer
-sandboxing, IPC validation, external-link gating) and the threat models for
-AI-generated content.
+### Overview
 
-## Acknowledgements
+GenOffice Zotero Integration is an unofficial derivative of
+[GenOffice v0.9.10](https://github.com/genspark-ai/genoffice/tree/v0.9.10). Its goal is to make
+Zotero available inside GenOffice Docs with a workflow similar to the Zotero integrations for
+Microsoft Word and WPS Office.
 
-GenOffice would not be possible without these open-source projects:
+The branch keeps the complete GenOffice application shell. Product changes are scoped to Zotero
+integration in `apps/docs` and Zotero-compatible DOCX round trips in `packages/docx-engine`.
 
-- [Electron](https://www.electronjs.org/) — the desktop runtime for every app.
-- [Univer](https://github.com/dream-num/univer) (Apache-2.0) — the spreadsheet
-  UI core that Sheets extends.
-- [PDFium](https://pdfium.googlesource.com/pdfium/) (BSD-3-Clause, bundled via
-  [@embedpdf/pdfium](https://github.com/embedpdf/embed-pdf-viewer)) — the
-  content-stream engine behind true PDF text and image editing.
-- [pdf.js](https://github.com/mozilla/pdf.js) (Apache-2.0) and
-  [pdf-lib](https://github.com/Hopding/pdf-lib) (MIT) — PDF rendering and
-  document assembly.
-- [Tiptap](https://tiptap.dev/) / [ProseMirror](https://prosemirror.net/) —
-  the block editors in Docs and Markdown.
-- [Konva](https://konvajs.org/) — canvas rendering for Slides and Sheets
-  charts.
-- [HarfBuzz](https://github.com/harfbuzz/harfbuzz) (wasm) — text-shaping
-  metrics for complex scripts.
-- [calamine](https://github.com/tafia/calamine) and
-  [IronCalc](https://github.com/ironcalc/IronCalc) — the read and calc layers
-  of the Rust xlsx sidecar.
-- Liberation, Carlito, Caladea, and Noto CJK fonts (OFL/Apache-2.0) — bundled
-  document fonts.
+### Implemented
 
-## Third-party notices
+- Communication with Zotero Desktop through Zotero LibreOffice Integration API v3.
+- Add, edit, and refresh in-text citations and bibliographies.
+- Open Zotero document preferences or remove field codes while retaining visible text.
+- Preserve Word `ADDIN ZOTERO_*` fields and `ZOTERO_PREF_1..n` custom properties.
+- Preserve one logical Zotero bibliography field across multiple paragraphs.
+- Split Zotero bibliography entries into separate paragraphs.
+- Map common Zotero RTF formatting: bold, italic, underline, strike-through, superscript,
+  subscript, font size, and capitalization.
+- Map hanging indents, paragraph spacing, and alignment.
+- Preserve the original GenOffice light, dark, and system themes.
 
-`npm run notices` regenerates the bundled third-party license summary
-(`tools/gen-third-party-notices.mjs`); all runtime dependencies are
-MIT/Apache-2.0/BSD-3-Clause/OFL, and the bundled fonts (Liberation, Carlito,
-Caladea, Noto CJK subsets) are OFL/Apache.
+### Download and installation
 
-## License
+The current release is an unsigned test build produced on an Intel Mac:
 
-GenOffice is licensed under the [Apache License 2.0](LICENSE), with one
-exception: the `ee/` directory is reserved for future enterprise modules and
-is covered by the [GenOffice Enterprise License](ee/LICENSE).
+1. Download `GenOffice-Zotero-Intel-macOS.zip` from
+   [Releases](https://github.com/yiyuexiong/genoffice-zotero/releases).
+2. Extract it and move `GenOffice.app` to Applications.
+3. Start Zotero Desktop before starting GenOffice.
+4. If macOS blocks the unsigned application, confirm it under System Settings > Privacy &
+   Security.
 
-The GenOffice and Genspark names and logos are trademarks of Mainfunc, Inc.
-The Apache-2.0 license does not grant permission to use them (see section 6);
-forks should use their own branding.
+Verified environment: Zotero 9.0.6, macOS Intel x86_64, and GenOffice v0.9.10.
+Apple Silicon, Windows, and Linux users currently need to build from source.
+
+### Usage
+
+1. Start Zotero.
+2. Open or create a `.docx` document in GenOffice.
+3. Open the References tab.
+4. Use Zotero Citation, Zotero Bibliography, Refresh, or Document Preferences.
+5. Save as DOCX. Zotero field codes are stored together with their visible content.
+
+GenOffice communicates with the local Zotero process through `127.0.0.1:23116`. It does not read
+or modify the Zotero database directly.
+
+### Build from source
+
+Node.js 22.12 or newer and npm 10 or newer are required.
+
+```bash
+npm install
+npm run dev
+```
+
+Build Docs and the complete GenOffice shell:
+
+```bash
+npm run build -w @genoffice/docs
+npm run build -w @genoffice/shell
+```
+
+Run the core checks:
+
+```bash
+npm run test -w @genoffice/docs
+npm run test -w @genoffice/docx-engine
+npm run typecheck -w @genoffice/docs
+npm run typecheck -w @genoffice/docx-engine
+```
+
+Current verified baseline: 1525 Docs tests passed; 1001 DOCX engine tests passed and 1 skipped.
+
+### Known limitations
+
+- Zotero footnote and endnote citations are not implemented.
+- `Document_setBibliographyStyle` is not fully mapped; paragraph formatting included in RTF is
+  supported.
+- RTF font tables, colors, and complex embedded objects are not mapped.
+- Zotero document migration, placeholder conversion, and export/import are not implemented.
+- A manual Word, WPS, and GenOffice round-trip matrix has not been completed.
+- The current macOS build is Intel x86_64 only, unsigned, and not notarized.
+
+### Upstream, license, and trademarks
+
+This project is based on [genspark-ai/genoffice](https://github.com/genspark-ai/genoffice). The
+original README is preserved at [README-GENOFFICE.md](README-GENOFFICE.md). This repository retains the
+upstream [Apache License 2.0](LICENSE), [NOTICE](NOTICE), and third-party notices. The `ee/`
+directory is governed by its separate license.
+
+The GenOffice and Genspark names and logos are trademarks of Mainfunc, Inc.; Apache-2.0 does not
+grant trademark rights. Zotero is a trademark of the Corporation for Digital Scholarship. This
+project is not affiliated with or endorsed by any of these organizations. Before publicly
+distributing the derivative application, replace the original GenOffice name and icon and complete
+independent code signing and notarization.
+
+## Development status
+
+The published branch is `main`, based on GenOffice v0.9.10 commit `f2c3d08`. The next priority is a
+real Word, WPS, and GenOffice citation and bibliography round-trip matrix.

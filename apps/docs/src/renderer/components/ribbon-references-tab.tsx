@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { Editor } from '@tiptap/core'
+import type { ZoteroCommand } from '../../shared/ipc'
 import {
   bibliographyLine,
   citationText,
@@ -358,6 +359,21 @@ export function ReferencesTab({
   const { t } = useI18n()
   const [captionOpen, setCaptionOpen] = useState(false)
   const [sourceOpen, setSourceOpen] = useState(false)
+  const [zoteroBusy, setZoteroBusy] = useState<ZoteroCommand | null>(null)
+
+  const runZotero = async (command: ZoteroCommand) => {
+    if (zoteroBusy) return
+    setZoteroBusy(command)
+    setDropdown(() => null)
+    try {
+      const result = await window.desktop.zoteroCommand(command)
+      if (!result.ok) window.alert(result.error ?? 'Zotero integration failed')
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : String(error))
+    } finally {
+      setZoteroBusy(null)
+    }
+  }
 
   const insertToc = () => {
     const entries = collectTocEntriesWithPages(editor, headingPages)
@@ -456,6 +472,67 @@ export function ReferencesTab({
 
   return (
     <>
+      <div className="ribbon-group">
+        <div className="ribbon-group-items">
+          <button
+            className="rb-big"
+            disabled={!hasDoc || zoteroBusy !== null}
+            data-tip="使用 Zotero 添加引文；光标在现有引文中时可编辑"
+            onClick={() => void runZotero('addEditCitation')}
+          >
+            <span className="rb-big-icon">
+              <IconCitation size={BIG} />
+            </span>
+            <span>Zotero 引文</span>
+          </button>
+          <button
+            className="rb-big"
+            disabled={!hasDoc || zoteroBusy !== null}
+            data-tip="使用 Zotero 添加或编辑参考文献表"
+            onClick={() => void runZotero('addEditBibliography')}
+          >
+            <span className="rb-big-icon">
+              <IconBook size={BIG} />
+            </span>
+            <span>Zotero 文献表</span>
+          </button>
+          <button
+            className="rb-big"
+            disabled={!hasDoc || zoteroBusy !== null}
+            data-tip="刷新全部 Zotero 引文和参考文献表"
+            onClick={() => void runZotero('refresh')}
+          >
+            <span className="rb-big-icon">
+              <IconRefresh size={BIG} />
+            </span>
+            <span>刷新</span>
+          </button>
+          <div className="rb-split-wrap">
+            <button
+              className="rb-big"
+              disabled={!hasDoc || zoteroBusy !== null}
+              data-tip="Zotero 文档设置"
+              onClick={() => toggleDropdown(setDropdown, 'zotero-settings')}
+            >
+              <span className="rb-big-icon">
+                <IconCitation size={BIG} />
+                <IconCaret />
+              </span>
+              <span>文档设置</span>
+            </button>
+            {dropdown === 'zotero-settings' && (
+              <div data-rb-panel="" className="layout-menu">
+                <button onClick={() => void runZotero('setDocPrefs')}>文档首选项</button>
+                <button onClick={() => void runZotero('removeCodes')}>移除域代码</button>
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="ribbon-group-label">Zotero</div>
+      </div>
+
+      <div className="ribbon-sep" />
+
       <div className="ribbon-group">
         <div className="ribbon-group-items">
           <button
