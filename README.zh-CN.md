@@ -84,10 +84,8 @@ npm run typecheck -w @genoffice/docx-engine
 ## 已知限制
 
 - 脚注式和尾注式 Zotero 引文尚未实现。
-- `Document_setBibliographyStyle` 尚未完整映射；RTF 自带的段落样式已支持。
 - RTF 字体表、颜色和复杂嵌入对象尚未映射。
 - Zotero 文档迁移、placeholder 转换以及 export/import 尚未实现。
-- 尚未完成 Word、WPS 和 GenOffice 三方人工往返测试矩阵。
 - 当前 macOS 包仅为 Intel x86_64，且未签名、未公证。
 
 ## 上游、许可证与商标
@@ -100,7 +98,3 @@ GenOffice 和 Genspark 名称及标志是 Mainfunc, Inc. 的商标；Apache-2.0 
 Zotero 是 Corporation for Digital Scholarship 的商标。本项目与上述任何组织均无隶属或背书关系。
 在公开发布派生应用前，应替换原 GenOffice 名称和图标，并完成独立的签名与公证。
 
-## 开发状态
-
-发布分支为 `main`，基于 GenOffice v0.9.10 提交 `f2c3d08`。下一个优先项是完成 Word、WPS 和
-GenOffice 之间真实的引文与参考文献表往返测试矩阵。
