@@ -4,8 +4,8 @@
 
 > [!IMPORTANT]
 > This is an unofficial derivative project based on GenOffice. It is not affiliated with or
-> endorsed by GenOffice, Genspark, or Zotero. The current build is an alpha preview for private
-> review.
+> endorsed by GenOffice, Genspark, or Zotero. This alpha preview is intended for testing and
+> evaluation and should not be used for important or production documents.
 
 ## Overview
 
@@ -45,7 +45,7 @@ The current release is an unsigned test build produced on an Intel Mac:
 
 Verified environment: Zotero 9.0.6, macOS Intel x86_64, and GenOffice v0.9.10.
 Apple Silicon, Windows, and Linux users currently need to build from source (sorry, I do not
-currently have an Apple Silicon Mac or a Windows/Linux machine).
+currently have an Apple Silicon Mac, a Windows PC, or a Linux computer).
 
 ## Usage
 

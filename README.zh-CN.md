@@ -2,9 +2,9 @@
 
 [English](README.md)
 
-> [!重要]
+> [!IMPORTANT]
 > 这是基于 GenOffice 的非官方派生项目，与 GenOffice、Genspark 或 Zotero 没有隶属或背书关系。
-> 当前构建为供私有审查的 Alpha 预览版。
+> 当前版本为 Alpha 预览版，仅供测试与评估，请勿用于重要或生产文档。
 
 ## 项目简介
 
@@ -39,7 +39,7 @@ GenOffice Zotero Integration 是基于
 4. macOS 如果拦截未签名应用，请在“系统设置 → 隐私与安全性”中确认打开。
 
 已验证环境：Zotero 9.0.6、macOS Intel x86_64、GenOffice v0.9.10。
-Apple Silicon、Windows 和 Linux 用户目前需要从源码构建（Sorry，我现在手上没有Apple Silicon、Windows或者Linux的机器）。
+Apple Silicon、Windows 和 Linux 用户目前需要从源码构建（Sorry，我现在手上没有 Apple Silicon、Windows 或者 Linux 的电脑）。
 
 ## 使用方法
 
