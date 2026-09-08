@@ -3,9 +3,9 @@
 [Chinese](README.zh-CN.md)
 
 > [!IMPORTANT]
-> This is an unofficial derivative project based on GenOffice. It is not affiliated with or
-> endorsed by GenOffice, Genspark, or Zotero. This alpha preview is intended for testing and
-> evaluation and should not be used for important or production documents.
+> This is an unofficial personal testing project based on GenOffice. This alpha preview is
+> intended for testing and evaluation and should not be used for important or production
+> documents.
 
 ## Overview
 
@@ -85,16 +85,11 @@ npm run typecheck -w @genoffice/docs
 npm run typecheck -w @genoffice/docx-engine
 ```
 
-Current verified baseline: 1525 Docs tests passed; 1001 DOCX engine tests passed and 1 skipped.
-
 ## Known limitations
 
 - Zotero footnote and endnote citations are not implemented.
-- `Document_setBibliographyStyle` is not fully mapped; paragraph formatting included in RTF is
-  supported.
 - RTF font tables, colors, and complex embedded objects are not mapped.
 - Zotero document migration, placeholder conversion, and export/import are not implemented.
-- A manual Word, WPS, and GenOffice round-trip matrix has not been completed.
 - The current macOS build is Intel x86_64 only, unsigned, and not notarized.
 
 ## Upstream, license, and trademarks
@@ -109,8 +104,3 @@ grant trademark rights. Zotero is a trademark of the Corporation for Digital Sch
 project is not affiliated with or endorsed by any of these organizations. Before publicly
 distributing the derivative application, replace the original GenOffice name and icon and complete
 independent code signing and notarization.
-
-## Development status
-
-The published branch is `main`, based on GenOffice v0.9.10 commit `f2c3d08`. The next priority is a
-real Word, WPS, and GenOffice citation and bibliography round-trip matrix.

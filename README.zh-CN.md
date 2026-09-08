@@ -3,7 +3,7 @@
 [English](README.md)
 
 > [!IMPORTANT]
-> 这是基于 GenOffice 的非官方派生项目，与 GenOffice、Genspark 或 Zotero 没有隶属或背书关系。
+> 这是基于 GenOffice 的非官方个人测试项目。
 > 当前版本为 Alpha 预览版，仅供测试与评估，请勿用于重要或生产文档。
 
 ## 项目简介
@@ -79,8 +79,6 @@ npm run typecheck -w @genoffice/docs
 npm run typecheck -w @genoffice/docx-engine
 ```
 
-当前验证基线：Docs 1525 项通过；DOCX 引擎 1001 项通过、1 项跳过。
-
 ## 已知限制
 
 - 脚注式和尾注式 Zotero 引文尚未实现。
@@ -97,4 +95,3 @@ npm run typecheck -w @genoffice/docx-engine
 GenOffice 和 Genspark 名称及标志是 Mainfunc, Inc. 的商标；Apache-2.0 不授予商标使用权。
 Zotero 是 Corporation for Digital Scholarship 的商标。本项目与上述任何组织均无隶属或背书关系。
 在公开发布派生应用前，应替换原 GenOffice 名称和图标，并完成独立的签名与公证。
-
