@@ -45,7 +45,7 @@ The current release is an unsigned test build produced on an Intel Mac:
 
 Verified environment: Zotero 9.0.6, macOS Intel x86_64, and GenOffice v0.9.10.
 Apple Silicon, Windows, and Linux users currently need to build from source (sorry, I do not
-currently have an Apple Silicon Mac or a Windows machine).
+currently have an Apple Silicon Mac or a Windows/Linux machine).
 
 ## Usage
 
