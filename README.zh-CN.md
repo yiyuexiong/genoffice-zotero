@@ -39,7 +39,7 @@ GenOffice Zotero Integration 是基于
 4. macOS 如果拦截未签名应用，请在“系统设置 → 隐私与安全性”中确认打开。
 
 已验证环境：Zotero 9.0.6、macOS Intel x86_64、GenOffice v0.9.10。
-Apple Silicon、Windows 和 Linux 用户目前需要从源码构建（Sorry，我现在手上没有Apple Silicon或者Windows的机器）。
+Apple Silicon、Windows 和 Linux 用户目前需要从源码构建（Sorry，我现在手上没有Apple Silicon、Windows或者Linux的机器）。
 
 ## 使用方法
 
