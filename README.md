@@ -55,6 +55,8 @@ currently have an Apple Silicon Mac, a Windows PC, or a Linux computer).
 4. Use Zotero Citation, Zotero Bibliography, Refresh, or Document Preferences.
 5. Save as DOCX. Zotero field codes are stored together with their visible content.
 
+![Zotero workflow demonstration](docs/assets/zotero-operation-demo.gif)
+
 GenOffice communicates with the local Zotero process through `127.0.0.1:23116`. It does not read
 or modify the Zotero database directly.
 

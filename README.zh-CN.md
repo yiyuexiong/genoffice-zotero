@@ -49,6 +49,8 @@ Apple Silicon、Windows 和 Linux 用户目前需要从源码构建（Sorry，�
 4. 使用“Zotero 引文”、“Zotero 文献表”、“刷新”或“文档首选项”。
 5. 保存为 DOCX，Zotero 域代码会与可见内容一起保存。
 
+![GenOffice Zotero 操作示范](docs/assets/zotero-operation-demo.gif)
+
 GenOffice 通过 `127.0.0.1:23116` 与本机 Zotero 通信，不直接读取或修改
 Zotero 数据库。
 
